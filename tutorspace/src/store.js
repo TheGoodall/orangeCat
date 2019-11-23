@@ -1,5 +1,9 @@
 import {createStore} from "redux";
 
-const reducer = (state = {}, action) => {return {}};
+const default_state = {
+    logged_in: false
+};
 
-export default createStore(reducer);
+const reducer = (state = default_state, action) => ({state});
+
+export default createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
