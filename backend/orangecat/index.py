@@ -4,7 +4,7 @@ from os import environ as env
 from werkzeug.exceptions import HTTPException
 
 from dotenv import load_dotenv, find_dotenv
-from flask import Flask, jsonify, redirect, render_template, session, url_for
+from flask import Flask, jsonify, redirect, render_template, session, url_for, request
 from authlib.integrations.flask_client import OAuth
 from six.moves.urllib.parse import urlencode
 
@@ -21,14 +21,14 @@ auth0 = oauth.register(
     access_token_url='https://dev-orange-cat.eu.auth0.com/oauth/token',
     authorize_url='https://dev-orange-cat.eu.auth0.com/authorize',
     client_kwargs={
-        'scope': 'openid profile email',
+        'scope': 'openid profile email'
     },
 )
 
 @app.route('/callback')
 def callback_handling():
     # Handles response from token endpoint
-    auth0.authorize_access_token()
+    auth0.authorize_access_token(redirect_uri='http://localhost:3000/callback')
     resp = auth0.get('userinfo')
     userinfo = resp.json()
 
@@ -47,6 +47,15 @@ def login():
     return auth0.authorize_redirect(redirect_uri='http://localhost:3000/callback')
 
 
+@app.route('/logout')
+def logout():
+    # Clear session stored data
+    session.clear()
+    # Redirect user to logout endpoint
+    params = {'returnTo': url_for('index', _external=True), 'client_id': 'TnIIJCX5qPCXbsVXIwfEWedNmw5sDqtx'}
+    return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
+
+
 def requires_auth(f):
   @wraps(f)
   def decorated(*args, **kwargs):
@@ -61,5 +70,12 @@ def requires_auth(f):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/dashboard')
+@requires_auth
+def dashboard():
+    return 'yeeeesssssssssssss'
+
 
 app.run(port=3000, debug=True)
