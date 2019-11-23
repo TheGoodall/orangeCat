@@ -9,6 +9,10 @@ name = "pypi"
 
 flask = "*"
 marshmallow = "*"
+python-dotenv = "*"
+requests = "*"
+authlib = "*"
+six = "*"
 
 networkx = "*"
 
