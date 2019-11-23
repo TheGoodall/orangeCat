@@ -1,0 +1,8 @@
+Flask
+marshmallow
+python-dotenv
+requests
+authlib
+six
+
+networkx
