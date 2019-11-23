@@ -1,5 +1,5 @@
 Table: Location
-Columns: (CentreID), PostCode
+Columns: (CentreID), PostCode, CentreName
 ex:	Durham, 6-7, -, 6-7,
 
 Table: Times
