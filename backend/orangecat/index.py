@@ -47,6 +47,15 @@ def login():
     return auth0.authorize_redirect(redirect_uri='http://localhost:3000/callback')
 
 
+@app.route('/logout')
+def logout():
+    # Clear session stored data
+    session.clear()
+    # Redirect user to logout endpoint
+    params = {'returnTo': url_for('index', _external=True), 'client_id': 'TnIIJCX5qPCXbsVXIwfEWedNmw5sDqtx'}
+    return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
+
+
 def requires_auth(f):
   @wraps(f)
   def decorated(*args, **kwargs):
