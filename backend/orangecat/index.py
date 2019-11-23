@@ -4,16 +4,12 @@ from os import environ as env
 from werkzeug.exceptions import HTTPException
 
 from dotenv import load_dotenv, find_dotenv
-from flask import Flask
-from flask import jsonify
-from flask import redirect
-from flask import render_template
-from flask import session
-from flask import url_for
-from authlib.flask.client import OAuth
+from flask import Flask, jsonify, redirect, render_template, session, url_for
+from authlib.integrations.flask_client import OAuth
 from six.moves.urllib.parse import urlencode
 
 app = Flask(__name__)
+app.secret_key = 'Xz\x04\xd29\xec\xc3_\x1c\xeb|\xc0zoO\x1a\xff\x9e\xf3\xf3^\x91U>'
 
 oauth = OAuth(app)
 
@@ -48,7 +44,7 @@ def callback_handling():
 
 @app.route('/login')
 def login():
-    return auth0.authorize_redirect(redirect_uri='https://localhost:3000/callback')
+    return auth0.authorize_redirect(redirect_uri='http://localhost:3000/callback')
 
 
 def requires_auth(f):
@@ -60,3 +56,10 @@ def requires_auth(f):
     return f(*args, **kwargs)
 
   return decorated
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+app.run(port=3000, debug=True)
