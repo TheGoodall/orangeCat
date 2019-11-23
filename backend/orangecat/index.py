@@ -75,7 +75,7 @@ def index():
 @app.route('/dashboard')
 @requires_auth
 def dashboard():
-    return 'yeeeesssssssssssss'
+    return str(session['profile'])+str(session['jwt_payload'])
 
 
 app.run(port=3000, debug=True)
