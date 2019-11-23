@@ -1,0 +1,24 @@
+Table: Location
+Columns: (CentreID), PostCode
+ex:	Durham, 6-7, -, 6-7,
+
+Table: Times
+Columns: (TimeID), CentreID, Day, Time
+
+Table: Tutor
+Columns: (TutorID), Fname, Sname, Email...
+
+Table: Tutor-Subject
+Columns: (TutorID, SubjectID), Preference
+
+Table: Subject
+Columns: (SubjectID), SubjectName, Level
+
+Table: Tutee
+Columns: (TuteeID), FirstSubject, SecondSubject, Fname, Sname, Pemail...
+
+Table: Tutor-Time
+Columns: (TutorID, TimeID)
+
+Table: Tutee-Time
+Columns: (TuteeID, TimeID)
