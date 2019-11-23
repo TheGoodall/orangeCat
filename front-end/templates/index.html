@@ -2,6 +2,7 @@
 <head>
     <title>1-to-1 Volunteer Tutoring</title>
     <script src="index.js"></script>
+    <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript">
@@ -45,12 +46,43 @@
         <div style="flex-grow: 1"></div>
     </div>
 
-    <div id="signUp" class="container" style="display: none; flex-direction: column">
+    <div id="signUp" class="container text-center" style="height: 100vh; display: none; flex-direction: column">
         <div style="flex-grow: 1"></div>
 
-            <div class="jumbotron"></div>
+            <div class="jumbotron jumbotron-fluid">
+                <h1>I am a...</h1>
+            </div>
 
         <div style="flex-grow: 1"></div>
+
+            <div class="row justify-content-center">
+                <div class="col">
+                    <div class="jumbotron jumbotron-fluid">
+                        <h2>Tutor</h2>
+                        <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('signUpTutor').style.display = 'block'">Sign Up</button>
+
+                        <div id="signUpTutor" class="modal">
+                            <form class="modal-content animate" method="post">
+                                    <div class="container">
+                                            <label for="uname"><b>Username</b></label>
+                                            <input type="text" placeholder="Enter Username" name="uname" required>
+                                      
+                                            <label for="psw"><b>Password</b></label>
+                                            <input type="password" placeholder="Enter Password" name="psw" required>
+                                              
+                                            <button type="submit">Login</button>
+                                          </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="jumbotron jumbotron-fluid">
+                        <h2>Tutee</h2>
+                    </div>
+                </div>
+            </div>
+
         <div style="flex-grow: 1"></div>
     </div>
 </body>
