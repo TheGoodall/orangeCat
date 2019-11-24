@@ -152,17 +152,3 @@ def match(tutors, tutees):
     
     
     return table
-
-
-tutors_to_match = [
-    Tutor("Alfie", ['a', 'b'], [0, 1], ['m', 'w']),
-    Tutor("Beth", ['b', 'c'], [0, 1], ['w']),
-    Tutor("Ceri", ['c', 'a'], [0, 1], ['m', 'w'])]
-tutees_to_match = [
-    Tutee("Xena", ['a', 'b'], ['m', 'w']),
-    Tutee("Yog", ['b', 'c'], ['m', 'w']),
-    Tutee("Zin", ['c', 'a'], ['m', 'w'])]
-
-match_table = match(tutors_to_match, tutees_to_match)
-for row in match_table:
-    print("{} matched with {} for {} at {}".format(row[0].tutorID, row[1].tuteeID, row[2], row[3]))
