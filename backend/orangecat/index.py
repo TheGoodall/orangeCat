@@ -44,6 +44,7 @@ def callback_handling():
 
     # Store the user information in flask session.
     session['jwt_payload'] = userinfo
+    session['user_id'] = userinfo['sub']
     session['profile'] = {
         'user_id': userinfo['sub'],
         'name': userinfo['name'],
@@ -85,7 +86,7 @@ def index():
 @app.route('/dashboard')
 @requires_auth
 def dashboard():
-    cursor.execute("select * from tutor where tutor_id='%s'", (session['profile']['user_id']))
+    cursor.execute("select * from tutee where tutee_id='%s'", (session['profile']['user_id']))
     account_exists = False
     for r in cursor:
         print(r)
@@ -114,7 +115,8 @@ def tutee_signup():
         sname = request.form['sname']
         first_subject = request.form['first_subject']
         second_subject = request.form['second_subject']
-        cursor.execute("")
+        cursor.execute("insert into tutee values (%s, %s, %s, %s, %s);",
+            (session['user_id'], first_subject, second_subject, fname, sname))
         return redirect(url_for("dashboard"))
     else:
         return 400
