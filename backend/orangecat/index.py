@@ -14,7 +14,7 @@ import mysql.connector
 
 cnx = mysql.connector.connect(
     user='root', password='KtvGEJmNHsvo7mJl',
-    host='35.242.131.39', database='orangecat-database'
+    host='35.242.131.39', database='orangeCat'
 )
 
 app = Flask(__name__)
