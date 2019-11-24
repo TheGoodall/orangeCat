@@ -6,6 +6,7 @@ from networkx.algorithms import bipartite
 class Tutor:
     def __init__(self, tutorID, subjects, prefs, days):
         #every tutor as a unique id
+        self.oid = tutorID
         self.tutorID = "tutor" + str(tutorID)
         self.subjects = subjects
         self.prefs = prefs
@@ -16,6 +17,7 @@ class Tutor:
 
 class Tutee:
     def __init__(self, tuteeID, subjects, days):
+        self.oid = tuteeID
         self.tuteeID = "tutee" + str(tuteeID)
         self.subjects = subjects # an ordered list. subjects[0] is the favourite option
         self.days = days
@@ -55,8 +57,10 @@ def s(tutor, tutee):
 def match(tutors, tutees):
     tutDict = {}
     for tutor in tutors:
+        print(tutor.subjects)
         tutDict[tutor.tutorID] = tutor
     for tutee in tutees:
+        print(tutee.subjects)
         tutDict[tutee.tuteeID] = tutee
     
     tutorIDIndex = len(tutors) * [0]
