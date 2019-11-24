@@ -64,7 +64,7 @@ def match(tutors, tutees):
     G.add_nodes_from([tutor.tutorID for tutor in tutors], bipartite=0)
     G.add_nodes_from([tutee.tuteeID for tutee in tutees], bipartite=1)
     # add edges - copy across from matrix
-    for 
+    #for 
 
 '''
 tutors_to_match = [
