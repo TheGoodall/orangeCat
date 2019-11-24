@@ -104,8 +104,8 @@ tutors_to_match = [
     Tutor("Beth", ['b', 'c'], [0, 1], ['w']),
     Tutor("Ceri", ['c', 'a'], [0, 1], ['m', 'w'])]
 tutees_to_match = [
-    Tutee("Xena", 'a', 'b', ['m', 'w']),
-    Tutee("Yog", 'b', 'c', ['m', 'w']),
-    Tutee("Zin", 'c', 'a', ['m', 'w'])]
+    Tutee("Xena", ['a', 'b'], ['m', 'w']),
+    Tutee("Yog", ['b', 'c'], ['m', 'w']),
+    Tutee("Zin", ['c', 'a'], ['m', 'w'])]
 
 print(match(tutors_to_match, tutees_to_match))
