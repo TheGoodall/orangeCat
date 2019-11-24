@@ -49,7 +49,7 @@ def s(tutor, tutee):
     else:
         prefs = []
         for i in range(len(tutee.subjects)):
-            prefs.append((alpha ** i) * tutor.subPrefs[allSubjects.index(tutee.subject[i])][1])
+            prefs.append((alpha ** i) * tutor.subPrefs[allSubjects.index(tutee.subjects[i])][1])
         
         bestPref = min(prefs)
         return (bestPref, prefs.index(bestPref))
