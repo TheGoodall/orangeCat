@@ -4,15 +4,15 @@
 
 <div>
     <label for="fname">First Name:</label>
-    <input type="text" name="fname" required>
+    <input type="text" name="fname" id="fname" required>
 </div>
 <div>
     <label for="sname">Surname:</label>
-    <input type="text" name="sname" required>
+    <input type="text" name="sname" id="sname" required>
 </div>
 <div>
     <label for="first_subject">First Choice Subject:</label>
-    <select name="first_subject" required>
+    <select name="first_subject" id="first_subject" required>
         <option value="" selected disabled hidden>Choose here</option>
         {% for s in subjects %}
 
@@ -23,7 +23,7 @@
 </div>
 <div>
     <label for="second_subject">Second Choice Subject:</label>
-    <select name="second_subject">
+    <select name="second_subject" id="second_subject">
         {% for s in subjects %}
 
         <option value="{{s[0]}}">{{s[1]}} - {{s[2]}}</option>
@@ -35,14 +35,10 @@
     {% for t in times %}
 
     <label for="time-{{t[0]}}">{{t[2]}} {{t[1]}}</label>
-    <input type="checkbox" name="time" value="{{t[0]}}">
+    <input type="checkbox" name="time" id="time-{{t[0]}}" value="{{t[0]}}">
     <br>
 
     {% endfor %}
-</div>
-
-<div class="button">
-    <button type="submit">Submit</button>
 </div>
 
 {% endblock %}
