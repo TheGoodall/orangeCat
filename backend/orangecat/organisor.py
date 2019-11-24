@@ -1,4 +1,5 @@
 import math
+import random
 import networkx as nx
 from networkx.algorithms import bipartite
 
@@ -8,7 +9,7 @@ allDays = ['m', 'w']
 class Tutor:
     def __init__(self, tutorID, subjects, prefs, days):
         #every tutor as a unique id
-        self.tutorID = tutorID
+        self.tutorID = "tutor" + str(tutorID)
         self.subjects = sorted(subjects)
         self.prefs = prefs
         self.subPrefs = []
@@ -26,7 +27,7 @@ class Tutor:
 
 class Tutee:
     def __init__(self, tuteeID, subjects, days):
-        self.tuteeID = tuteeID
+        self.tuteeID = "tutee" + str(tuteeID)
         self.subjects = subjects # an ordered list. subjects[0] is the favourite option
         self.days = days
 
@@ -50,12 +51,20 @@ def s(tutor, tutee):
         prefs = []
         for i in range(len(tutee.subjects)):
             prefs.append((alpha ** i) * tutor.subPrefs[allSubjects.index(tutee.subjects[i])][1])
+
+        print(prefs)
         
         bestPref = min(prefs)
         return (bestPref, prefs.index(bestPref))
 
 # match takes a list of tutors and tutees and returns the best possible matching
 def match(tutors, tutees):
+    tutDict = {}
+    for tutor in tutors:
+        tutDict[tutor.tutorID] = tutor
+    for tutee in tutees:
+        tutDict[tutee.tuteeID] = tutee
+    
     tutorIDIndex = len(tutors) * [0]
     tuteeIDIndex = len(tutees) * [0]
     scoreMat = len(tutors) * [len(tutees) * [0]] #scoreMat[tutorIndex][tuteeIndex] returns the score for this pair and the label explaining the score - is stored as a tuple (score, label)
@@ -94,9 +103,62 @@ def match(tutors, tutees):
     if not ok:
         return match(matchableTutors, matchableTutees)
 
+    tts = []    #tutor, tutee, subject
+    print("")
+    for key in M:
+        edgeLabel = G.get_edge_data(key, M[key])['label']
+        print(edgeLabel)
+        print(tutDict[M[key]].tuteeID)
+        print(tutDict[M[key]].subjects)
+        subject = tutDict[M[key]].subjects[edgeLabel]
+        tts.append([tutDict[key], tutDict[M[key]], subject])
+
+    days = {'misc': 0}
+    table = []
+
+    # if only one day is an option then trivially assign pair to that time slot - we then balance the rest accordingly    
+    i = 0
+    while i < len(tts):
+        pairDays = []
+        for d in tts[i][0].days:
+            if d in tts[i][1].days:
+                pairDays.append(d)
+        if len(pairDays) == 1:
+            day = pairDays[0]
+            if day in days:
+                days[day] += 1
+            else:
+                days[day] = 1
+            tts[i].append(d)
+            table.append(tts.pop(i))
+        else:
+            tts[i].append(pairDays)
+            i += 1
+
+    overlap = lambda xs, ys: [x for x in xs if x in ys]
+    pick = lambda xs: random.choice(xs)
+
+    # if any remaining pairs can be grouped with the trivial groupings then do so
+    i = 0
+    while i < len(tts):
+        pair = tts[i]
+        pair.append(overlap(pair[3], days))
+        if len(pair[4]) == 0:
+            pair[4] = 'misc'
+            i += 1
+        else:
+            pair[3] = pick(pair[4])
+            table.append(tts.pop(i)[:4])
+
+    # deal with outliers
+    i = 0
+    while i < len(tts):
+        pair = tts[i]
+        pair[3] = pick(pair[3])
+        table.append(tts.pop(i)[:4])
     
     
-    return M
+    return table
 
 
 tutors_to_match = [
@@ -108,4 +170,6 @@ tutees_to_match = [
     Tutee("Yog", ['b', 'c'], ['m', 'w']),
     Tutee("Zin", ['c', 'a'], ['m', 'w'])]
 
-print(match(tutors_to_match, tutees_to_match))
+match_table = match(tutors_to_match, tutees_to_match)
+for row in match_table:
+    print("{} matched with {} for {} at {}".format(row[0].tutorID, row[1].tuteeID, row[2], row[3]))
