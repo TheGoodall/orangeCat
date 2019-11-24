@@ -23,6 +23,9 @@
 </head>
 
 <body>
+<div style="-webkit-box-shadow: inset 0px 0px 17px 1px rgba(0,0,0,0.75);
+-moz-box-shadow: inset 0px 0px 17px 1px rgba(0,0,0,0.75);
+box-shadow: inset 0px 0px 17px 1px rgba(0,0,0,0.75); min-width: 100vw; min-height: 100vh">
     <div id="selectCentre" class="container" style="height: 100vh; display:flex; flex-direction:column">
         <div class="row justify-content-end">
             <header>
@@ -30,21 +33,23 @@
                 <a href="{{ url_for('login') }}" role="button" class="btn btn-primary">Log in</a>
                 {% else %}
                 <p>Hi {{ session['jwt_payload']['name'] }}, You magnificent bastard</p>
-                <p>Not {{session['jwt_payload']['name']}}? <a href={{ url_for("logout")}}>Logout!</a></p>
-                {% endif %}
-            </header>
-        </div>
-        <div>
-            {% block main %}{% endblock %}
-        </div>
-    </div>
+                <p>Not {{session['jwt_payload']['name']}}? <a href={{ url_for("logout")}}>Logout!
+</a></p>
+{% endif %}
+</header>
+</div>
+<div>
+    {% block main %}{% endblock %}
+</div>
+</div>
 
-    <div id="signUp" class="container" style="display: none; flex-direction: column">
-        <div style="flex-grow: 1"></div>
+<div id="signUp" class="container" style="display: none; flex-direction: column">
+    <div style="flex-grow: 1"></div>
 
-            <div class="jumbotron"></div>
+    <div class="jumbotron"></div>
 
-        <div style="flex-grow: 1"></div>
-        <div style="flex-grow: 1"></div>
-    </div>
+    <div style="flex-grow: 1"></div>
+    <div style="flex-grow: 1"></div>
+</div>
+</div>
 </body>

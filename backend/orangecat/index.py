@@ -55,7 +55,7 @@ def callback_handling():
 
 @app.route('/login')
 def login():
-    return auth0.authorize_redirect(redirect_uri='http://localhost:3000/callback')
+    return auth0.authorize_redirect(redirect_uri='http://10.248.81.148:3000/callback')
 
 
 @app.route('/logout')
@@ -93,7 +93,6 @@ def dashboard():
     account_exists = False
     tutortype = ""
     for r in result:
-        print(r)
         account_exists = True
         tutortype = "tutee"
     cursor.execute("select * from tutor where tutor_id=%s", (session['profile']['user_id'],))
@@ -101,9 +100,27 @@ def dashboard():
     for r in result:
         account_exists = True
         tutortype = "tutor"
+    if tutortype == "tutor":
+        cursor.execute("select * from tutor_tutee where tutor_id=%s", (session['profile']['user_id'],))
+        tutor_tutee_pair = cursor.fetchone()
+        if not tutor_tutee_pair:
+            pair = ""
+        else:
+            cursor.execute("select * from tutee where tutee_id=%s", (tutor_tutee_pair[1],))
+            pair = cursor.fetchone()
 
+    elif tutortype == "tutee":
+        cursor.execute("select * from tutor_tutee where tutee_id=%s", (session['profile']['user_id'],))
+        tutor_tutee_pair = cursor.fetchone()
+        if not tutor_tutee_pair:
+            pair = ""
+        else:
+            cursor.execute("select * from tutor where tutor_id=%s", (tutor_tutee_pair[1],))
+            pair = cursor.fetchone()
+    else:
+        pair = ""
 
-    return render_template('dashboard.html', loggedin=session, account_exists=account_exists, tutortype=tutortype)
+    return render_template('dashboard.html', loggedin=session, account_exists=account_exists, tutortype=tutortype, pair=pair)
 
 @app.route('/dashboard/tutor')
 @requires_auth
