@@ -4,6 +4,9 @@
 
 <form action="/dashboard/{% block endpoint %}{% endblock %}-signup" method="post">
     {% block questions %}{% endblock %}
+    <div class="button">
+        <button type="submit">Submit</button>
+    </div>
 </form>
 
 {% endblock %}

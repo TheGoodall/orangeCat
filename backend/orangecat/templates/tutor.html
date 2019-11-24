@@ -1,5 +1,32 @@
 {% extends "forms.html" %}
-
+{% block endpoint %}tutor{% endblock %}
 {% block questions %}
+
+<div>
+    <label for="fname">First Name:</label>
+    <input type="text" name="fname" id="fname" required>
+</div>
+<div>
+    <label for="sname">Surname:</label>
+    <input type="text" name="sname" id="sname" required>
+</div>
+<div>
+    {% for s in subjects %}
+
+    <label for="subject-{{s[0]}}">{{s[2]}} {{s[1]}}</label>
+    <input type="checkbox" name="subjects" id="subject-{{s[0]}}" value="{{s[0]}}">
+    <br>
+
+    {% endfor %}
+</div>
+<div>
+    {% for t in times %}
+
+    <label for="time-{{t[0]}}">{{t[2]}} {{t[1]}}</label>
+    <input type="checkbox" name="time" id="time-{{t[0]}}" value="{{t[0]}}">
+    <br>
+
+    {% endfor %}
+</div>
 
 {% endblock %}
