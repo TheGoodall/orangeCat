@@ -81,7 +81,7 @@ def requires_auth(f):
 def index():
     return render_template('index.html', loggedin=session)
 
-
+#Frontend endpoints
 @app.route('/dashboard')
 @requires_auth
 def dashboard():
@@ -95,12 +95,18 @@ def dashboard():
 @app.route('/dashboard/tutor')
 @requires_auth
 def tutor():
-    return render_template('tutor.html', loggedin=session)
+    cursor.execute("select * from subject")
+    data = [i for i in cursor]
+    return render_template('tutor.html', loggedin=session, data=data)
 
 @app.route('/dashboard/tutee')
 @requires_auth
 def tutee():
     return render_template('tutee.html', loggedin=session)
+
+#API endpoints
+
+
 
 
 app.run(host='0.0.0.0', port=3000, debug=True)
