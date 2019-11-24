@@ -4,8 +4,12 @@
 
 <div style="background-color:{% if tutortype == 'tutee' %}green{%else%}red{%endif%}">
     <div class="jumbotron">
+        {% if pair %}
         <h2>Your Match Is...</h2>
-        <p>{% if tutortype == 'tutee' %}{{pair}}{%else%}{{pair}}{%endif%}</p>
+        <p>{% if tutortype == 'tutee' %}your tutor is: {{pair}}{%elif tutortype == 'tutor' %} your tutee is: {{pair}}{%endif%}</p>
+        {% else %}
+        <h2> Unfortunately, you do not have a matching yet </h2>
+        {% endif %}
     </div>
 </div>
 {% else %}
