@@ -79,6 +79,8 @@ def requires_auth(f):
 
 @app.route('/')
 def index():
+    if 'profile' in session:
+        return redirect(url_for("dashboard"))
     return render_template('index.html', loggedin=session)
 
 #Frontend endpoints
