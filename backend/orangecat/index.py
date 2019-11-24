@@ -107,6 +107,16 @@ def tutee():
     print(data)
     return render_template('tutee.html', loggedin=session, data=data)
 
+@app.route('/dashboard/tutee-signup', methods=["POST"])
+def tutee_signup():
+    print(request)
+    return request.args.get("fname")
+
+@app.route('/dashboard/tutor-signup', methods=["POST"])
+def tutor_signup():
+    return request.args.get("name")
+
+
 #API endpoints
 
 
