@@ -14,9 +14,9 @@
     <label for="first_subject">First Choice Subject:</label>
     <select name="first_subject" required>
         <option value="" selected disabled hidden>Choose here</option>
-        {% for r in data %}
+        {% for s in subjects %}
 
-        <option value="{{r[0]}}">{{r[1]}} - {{r[2]}}</option>
+        <option value="{{s[0]}}">{{s[1]}} - {{s[2]}}</option>
 
         {% endfor %}
     </select>
@@ -24,12 +24,21 @@
 <div>
     <label for="second_subject">Second Choice Subject:</label>
     <select name="second_subject">
-        {% for r in data %}
+        {% for s in subjects %}
 
-        <option value="{{r[0]}}">{{r[1]}} - {{r[2]}}</option>
+        <option value="{{s[0]}}">{{s[1]}} - {{s[2]}}</option>
 
         {% endfor %}
     </select>
+</div>
+<div>
+    {% for t in times %}
+
+    <label for="time-{{t[0]}}">{{t[2]}} {{t[1]}}</label>
+    <input type="checkbox" name="time" value="{{t[0]}}">
+    <br>
+
+    {% endfor %}
 </div>
 
 <div class="button">

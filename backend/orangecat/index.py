@@ -106,9 +106,10 @@ def tutor():
 @requires_auth
 def tutee():
     cursor.execute("select * from subject")
-    data = [r for r in cursor]
-    print(data)
-    return render_template('tutee.html', loggedin=session, data=data)
+    subjects = [s for s in cursor]
+    cursor.execute("select * from times")
+    times = [t for t in cursor]
+    return render_template('tutee.html', loggedin=session, subjects=subjects, times=times)
 
 @app.route('/dashboard/tutee-signup', methods=["POST"])
 def tutee_signup():
@@ -119,6 +120,10 @@ def tutee_signup():
         second_subject = request.form['second_subject']
         cursor.execute("insert into tutee values (%s, %s, %s, %s, %s);",
             (session['user_id'], first_subject, second_subject, fname, sname))
+        for time_id in request.form.getlist('time'):
+            print(session['user_id'], time_id)
+            cursor.execute("insert into tutee_time values (%s, %s)",
+                (session['user_id'], time_id))
         cnx.commit()
         return redirect(url_for("dashboard"))
     else:
