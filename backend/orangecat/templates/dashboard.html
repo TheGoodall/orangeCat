@@ -2,8 +2,11 @@
 {% block main %}
 {% if account_exists %}
 
-<div style="background-color:{% if tutortype == "tutee" %}green{%else%}red{%endif%}">
-    test
+<div style="background-color:{% if tutortype == 'tutee' %}green{%else%}red{%endif%}">
+    <div class="jumbotron">
+        <h2>Your Match Is...</h2>
+        <p>{% if tutortype == 'tutee' %}{{pair[0][1] + " " + pair[0][2]}}{%else%}{{pair[1][1] + " " + pair[1][2]}}{%endif%}</p>
+    </div>
 </div>
 {% else %}
 
