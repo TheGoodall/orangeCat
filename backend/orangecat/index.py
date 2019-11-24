@@ -38,7 +38,7 @@ auth0 = oauth.register(
 @app.route('/callback')
 def callback_handling():
     # Handles response from token endpoint
-    auth0.authorize_access_token(redirect_uri='http://localhost:3000/callback')
+    auth0.authorize_access_token(redirect_uri='http://10.248.81.148:3000/callback')
     resp = auth0.get('userinfo')
     userinfo = resp.json()
 
