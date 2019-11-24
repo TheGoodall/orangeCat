@@ -1,56 +1,17 @@
-<!DOCTYPE html>
-<head>
-    <title>1-to-1 Volunteer Tutoring</title>
-    <script src="{{ url_for('static', filename='index.js') }}"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        function toggle_visibility(id){
-            var elem = document.getElementById(id);
-            if(elem.style.display == 'block') elem.style.display = 'none';
-            else elem.style.display = 'block';
-        }
-    </script>
-    <script>
-        function selectCentre(){
-            var first = document.getElementById("selectCentre");
-            var second = document.getElementById("signUp");
-            first.style.display = "none";
-            second.style.display = "flex"
-        }
-    </script>
-</head>
+{% extends "layout.html" %}
+{% block main %}
 
-<body>
-    <div id="selectCentre" class="container" style="height: 100vh; display:flex; flex-direction:column">
-        <div class="row justify-content-end">
-            <header>
-                <a href="{{ url_for('login') }}" role="button" class="btn btn-primary">Log in</a>
-            </header>
+<p> {{ loggedin }} </p>
+<div style="flex-grow: 1"></div>
+<div class="row justify-content-center align-middle">
+    <h1>I live near...</h1>
+</div>
+<div class="row justify-content-center">        
+    <div class="input-group mb-3">
+        <input type="text" class="form-control form-control-lg"placeholder="Centre Location" id="centreSearch">
+        <div class="input-group-append">
+            <button type="button" onclick="selectCentre()" class="btn btn-outline-primary">Go</button>        
         </div>
-        <div style="flex-grow: 1"></div>
-        <div class="row justify-content-center align-middle">
-            <h1>I live near...</h1>
-        </div>
-        <div class="row justify-content-center">        
-            <div class="input-group mb-3">
-                <input type="text" class="form-control form-control-lg"placeholder="Centre Location" id="centreSearch">
-                <div class="input-group-append">
-                    <button type="button" onclick="selectCentre()" class="btn btn-outline-primary">Go</button>
-
-                    
-                </div>
-            </div>
-        </div>
-        <div style="flex-grow: 1"></div>
     </div>
-
-    <div id="signUp" class="container" style="display: none; flex-direction: column">
-        <div style="flex-grow: 1"></div>
-
-            <div class="jumbotron"></div>
-
-        <div style="flex-grow: 1"></div>
-        <div style="flex-grow: 1"></div>
-    </div>
-</body>
+</div>
+{% endblock %}
