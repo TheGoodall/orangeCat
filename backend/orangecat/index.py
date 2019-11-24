@@ -101,7 +101,7 @@ def dashboard():
     for r in result:
         accound_exists = True
         tutortype = "tutor"
-    cursor.execute("select * from
+
 
     return render_template('dashboard.html', loggedin=session, account_exists=account_exists, tutortype=tutortype)
 
