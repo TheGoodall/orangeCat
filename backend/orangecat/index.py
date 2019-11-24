@@ -103,14 +103,20 @@ def dashboard():
     if tutortype == "tutor":
         cursor.execute("select * from tutor_tutee where tutor_id=%s", (session['profile']['user_id'],))
         tutor_tutee_pair = cursor.fetchone()
-        cursor.execute("select * from tutee where tutee_id=%s", (tutor_tutee_pair[1],))
-        pair = cursor.fetchone()
+        if not tutor_tutee_pair:
+            pair = ""
+        else:
+            cursor.execute("select * from tutee where tutee_id=%s", (tutor_tutee_pair[1],))
+            pair = cursor.fetchone()
 
     elif tutortype == "tutee":
         cursor.execute("select * from tutor_tutee where tutee_id=%s", (session['profile']['user_id'],))
         tutor_tutee_pair = cursor.fetchone()
-        cursor.execute("select * from tutor where tutor_id=%s", (tutor_tutee_pair[1],))
-        pair = cursor.fetchone()
+        if not tutor_tutee_pair:
+            pair = ""
+        else:
+            cursor.execute("select * from tutor where tutor_id=%s", (tutor_tutee_pair[1],))
+            pair = cursor.fetchone()
     else:
         pair = ""
 
