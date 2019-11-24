@@ -8,6 +8,13 @@ from flask import Flask, jsonify, redirect, render_template, session, url_for, r
 from authlib.integrations.flask_client import OAuth
 from six.moves.urllib.parse import urlencode
 
+import mysql.connector
+
+cnx = mysql.connector.connect(
+    user='root', password='KtvGEJmNHsvo7mJl',
+    host='35.242.131.39', database='orangecat-database'
+)
+
 app = Flask(__name__)
 app.secret_key = 'Xz\x04\xd29\xec\xc3_\x1c\xeb|\xc0zoO\x1a\xff\x9e\xf3\xf3^\x91U>'
 
