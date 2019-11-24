@@ -29,9 +29,8 @@
                 {% if not 'profile' in session %}
                 <a href="{{ url_for('login') }}" role="button" class="btn btn-primary">Log in</a>
                 {% else %}
-                Hi
-                {{ session['jwt_payload']['name'] }} 
-                , You magnificent bastard
+                <p>Hi {{ session['jwt_payload']['name'] }}, You magnificent bastard</p>
+                <p>Not {{session['jwt_payload']['name']}}? <a href={{ url_for("logout")}}>Logout!</a></p>
                 {% endif %}
             </header>
         </div>
