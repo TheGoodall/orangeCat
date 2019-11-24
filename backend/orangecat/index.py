@@ -78,13 +78,13 @@ def requires_auth(f):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', loggedin=('profile' in session))
 
 
 @app.route('/dashboard')
 @requires_auth
 def dashboard():
-    return render_template('dashboard.html')
+    return render_template('dashboard.html', loggedin=('profile' in session))
 
 
 app.run(host='0.0.0.0', port=3000, debug=True)
