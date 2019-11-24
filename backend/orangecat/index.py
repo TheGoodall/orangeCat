@@ -3,6 +3,8 @@ import json
 from os import environ as env
 from werkzeug.exceptions import HTTPException
 
+import organisor
+
 from dotenv import load_dotenv, find_dotenv
 from flask import Flask, jsonify, redirect, render_template, session, url_for, request
 from authlib.integrations.flask_client import OAuth
