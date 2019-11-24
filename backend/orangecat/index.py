@@ -105,7 +105,6 @@ def tutee():
     cursor.execute("select * from subject")
     data = [r for r in cursor]
     print(data)
-    print('!')
     return render_template('tutee.html', loggedin=session, data=data)
 
 #API endpoints

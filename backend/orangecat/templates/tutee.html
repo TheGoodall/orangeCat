@@ -15,13 +15,24 @@
     <select name="first_subject">
         {% for r in data %}
 
-        <option value="{{r}}">{{r}}</option>
+        <option value="{{r[0]}}">{{r[1]}} - {{r[2]}}</option>
 
         {% endfor %}
     </select>
 </div>
 <div>
     <label for="second_subject">Second Choice Subject:</label>
+    <select name="second_subject">
+        {% for r in data %}
+
+        <option value="{{r[0]}}">{{r[1]}} - {{r[2]}}</option>
+
+        {% endfor %}
+    </select>
+</div>
+
+<div class="button">
+    <button type="submit">Submit</button>
 </div>
 
 {% endblock %}
