@@ -10,6 +10,13 @@ from flask import Flask, jsonify, redirect, render_template, session, url_for, r
 from authlib.integrations.flask_client import OAuth
 from six.moves.urllib.parse import urlencode
 
+import mysql.connector
+
+cnx = mysql.connector.connect(
+    user='root', password='KtvGEJmNHsvo7mJl',
+    host='35.242.131.39', database='orangeCat'
+)
+
 app = Flask(__name__)
 app.secret_key = 'Xz\x04\xd29\xec\xc3_\x1c\xeb|\xc0zoO\x1a\xff\x9e\xf3\xf3^\x91U>'
 
@@ -77,7 +84,7 @@ def index():
 @app.route('/dashboard')
 @requires_auth
 def dashboard():
-    return str(session['profile'])+str(session['jwt_payload'])
+    return render_template('dashboard.html')
 
 
 app.run(host='0.0.0.0', port=3000, debug=True)
