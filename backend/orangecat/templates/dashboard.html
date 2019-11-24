@@ -1,9 +1,13 @@
 {% extends 'layout.html' %}
 {% block main %}
 {% if account_exists %}
-t
+
+lovely dashboard here
+
 {% else %}
 
-f
+<a href="/dashboard/tutor">tutor</a>
+<a href="/dashboard/tutee">tutee</a>
+
 {% endif %}
 {% endblock %}
