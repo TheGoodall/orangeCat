@@ -3,26 +3,15 @@ import random
 import networkx as nx
 from networkx.algorithms import bipartite
 
-allSubjects = ['a', 'b', 'c', 'x', 'y']
-allDays = ['m', 'w']
-
 class Tutor:
     def __init__(self, tutorID, subjects, prefs, days):
         #every tutor as a unique id
         self.tutorID = "tutor" + str(tutorID)
-        self.subjects = sorted(subjects)
+        self.subjects = subjects
         self.prefs = prefs
         self.subPrefs = []
-        i, j = 0, 0
-        while i < len(allSubjects):
-            if j < len(self.subjects) and self.subjects[j] == allSubjects[i]:
-                #if the tutor is willing to teach this subject store the associated value in a tuple
-                self.subPrefs.append((allSubjects[i], prefs[j]))
-                j += 1
-            else:
-                #else note that the tutor will not teach the subject by assigning infinity in the tuple
-                self.subPrefs.append((allSubjects[i], math.inf))
-            i += 1
+        for i in range(len(subjects)):
+            self.subPrefs.append((subjects[i], prefs[i]))
         self.days = days
 
 class Tutee:
@@ -49,13 +38,18 @@ def s(tutor, tutee):
         return (math.inf, "days")
     else:
         prefs = []
+        subs = []
         for i in range(len(tutee.subjects)):
-            prefs.append((alpha ** i) * tutor.subPrefs[allSubjects.index(tutee.subjects[i])][1])
-
-        print(prefs)
+            
+            if not tutee.subjects[i] in tutor.subjects:
+                prefs.append(math.inf)
+            else:
+                ind = tutor.subjects.index(tutee.subjects[i])
+                prefs.append((alpha ** i) * tutor.subPrefs[ind][1])
+            subs.append(tutee.subjects[i])
         
         bestPref = min(prefs)
-        return (bestPref, prefs.index(bestPref))
+        return (bestPref, subs[prefs.index(bestPref)])
 
 # match takes a list of tutors and tutees and returns the best possible matching
 def match(tutors, tutees):
@@ -106,11 +100,10 @@ def match(tutors, tutees):
     tts = []    #tutor, tutee, subject
     print("")
     for key in M:
-        edgeLabel = G.get_edge_data(key, M[key])['label']
-        print(edgeLabel)
+        subject = G.get_edge_data(key, M[key])['label']
+        print(subject)
         print(tutDict[M[key]].tuteeID)
         print(tutDict[M[key]].subjects)
-        subject = tutDict[M[key]].subjects[edgeLabel]
         tts.append([tutDict[key], tutDict[M[key]], subject])
 
     days = {'misc': 0}
