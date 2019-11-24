@@ -109,8 +109,15 @@ def tutee():
 
 @app.route('/dashboard/tutee-signup', methods=["POST"])
 def tutee_signup():
-    print(request)
-    return request.args.get("fname")
+    if request.form['fname'] and request.form['sname'] and request.form['first_subject'] and request.form['second_subject']:
+        fname = request.form['fname']
+        sname = request.form['sname']
+        first_subject = request.form['first_subject']
+        second_subject = request.form['second_subject']
+        cursor.execute("")
+        return redirect(url_for("dashboard"))
+    else:
+        return 400
 
 @app.route('/dashboard/tutor-signup', methods=["POST"])
 def tutor_signup():
