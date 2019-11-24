@@ -79,7 +79,7 @@ def requires_auth(f):
 
 @app.route('/')
 def index():
-    return render_template('index.html', loggedin=('profile' in session))
+    return render_template('index.html', loggedin=session)
 
 
 @app.route('/dashboard')
@@ -90,17 +90,17 @@ def dashboard():
     for r in cursor:
         print(r)
         account_exists = True
-    return render_template('dashboard.html', loggedin=('profile' in session), account_exists=account_exists)
+    return render_template('dashboard.html', loggedin=session, account_exists=account_exists)
 
 @app.route('/dashboard/tutor')
 @requires_auth
 def tutor():
-    return render_template('tutor.html', loggedin=('profile' in session))
+    return render_template('tutor.html', loggedin=session)
 
 @app.route('/dashboard/tutee')
 @requires_auth
 def tutee():
-    return render_template('tutee.html', loggedin=('profile' in session))
+    return render_template('tutee.html', loggedin=session)
 
 
 app.run(host='0.0.0.0', port=3000, debug=True)
