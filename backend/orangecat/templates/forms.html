@@ -2,8 +2,8 @@
 
 {% block main %}
 
-
+<form action="/{% block endpoint %}{% endblock %}-signup" method="post">
     {% block questions %}{% endblock %}
-
+</form>
 
 {% endblock %}
