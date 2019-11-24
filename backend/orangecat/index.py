@@ -92,6 +92,16 @@ def dashboard():
         account_exists = True
     return render_template('dashboard.html', loggedin=('profile' in session), account_exists=account_exists)
 
+@app.route('/dashboard/tutor')
+@requires_auth
+def tutor():
+    return render_template('tutor.html', loggedin=('profile' in session))
+
+@app.route('/dashboard/tutee')
+@requires_auth
+def tutee():
+    return render_template('tutee.html', loggedin=('profile' in session))
+
 
 app.run(host='0.0.0.0', port=3000, debug=True)
 cnx.close()
