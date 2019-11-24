@@ -16,6 +16,7 @@ cnx = mysql.connector.connect(
     user='root', password='KtvGEJmNHsvo7mJl',
     host='35.242.131.39', database='orangeCat'
 )
+cursor = cnx.cursor()
 
 app = Flask(__name__)
 app.secret_key = 'Xz\x04\xd29\xec\xc3_\x1c\xeb|\xc0zoO\x1a\xff\x9e\xf3\xf3^\x91U>'
@@ -84,7 +85,12 @@ def index():
 @app.route('/dashboard')
 @requires_auth
 def dashboard():
-    return render_template('dashboard.html', loggedin=('profile' in session))
+    cursor.execute("select * from tutor where tutor_id='%s'", (session['profile']['user_id']))
+    account_exists = False
+    for r in cursor:
+        print(r)
+        account_exists = True
+    return render_template('dashboard.html', loggedin=('profile' in session), account_exists=account_exists)
 
 
 app.run(host='0.0.0.0', port=3000, debug=True)
