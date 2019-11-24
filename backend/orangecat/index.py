@@ -55,7 +55,7 @@ def callback_handling():
 
 @app.route('/login')
 def login():
-    return auth0.authorize_redirect(redirect_uri='http://localhost:3000/callback')
+    return auth0.authorize_redirect(redirect_uri='http://10.248.81.148:3000/callback')
 
 
 @app.route('/logout')
