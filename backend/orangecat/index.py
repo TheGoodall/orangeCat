@@ -3,6 +3,8 @@ import json
 from os import environ as env
 from werkzeug.exceptions import HTTPException
 
+import organisor
+
 from dotenv import load_dotenv, find_dotenv
 from flask import Flask, jsonify, redirect, render_template, session, url_for, request
 from authlib.integrations.flask_client import OAuth
@@ -82,7 +84,7 @@ def index():
 @app.route('/dashboard')
 @requires_auth
 def dashboard():
-    return str(session['profile'])+str(session['jwt_payload'])
+    return render_template('dashboard.html')
 
 
-app.run(port=3000, debug=True)
+app.run(host='0.0.0.0', port=3000, debug=True)
