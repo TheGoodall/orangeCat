@@ -10,15 +10,14 @@
     <label for="sname">Surname:</label>
     <input type="text" name="sname">
 </div>
-{{ for i in data }}
-
-{{i}}
-
-{{ endfor }}
 <div>
     <label for="first_subject">First Choice Subject:</label>
     <select name="first_subject">
-        
+        {% for r in data %}
+
+        <option value="{{r}}">{{r}}</option>
+
+        {% endfor %}
     </select>
 </div>
 <div>
