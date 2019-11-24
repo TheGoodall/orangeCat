@@ -63,7 +63,10 @@ def match(tutors, tutees):
     # add nodes - tutors and tutees
     G.add_nodes_from([tutor.tutorID for tutor in tutors], bipartite=0)
     G.add_nodes_from([tutee.tuteeID for tutee in tutees], bipartite=1)
+    # add edges - copy across from matrix
+    for 
 
+'''
 tutors_to_match = [
     Tutor(1, ['a', 'b'], ['m', 'w']),
     Tutor(2, ['b', 'c'], ['w']),
@@ -87,3 +90,4 @@ for s in tutees_to_match:
             p.add_edge((t.id, d), s.id, weight=0)
 
 print(bipartite.minimum_weight_full_matching(p))
+'''
