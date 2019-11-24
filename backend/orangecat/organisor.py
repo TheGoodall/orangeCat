@@ -83,7 +83,7 @@ def match(tutors, tutees):
     #remove any infinite edges
     ok = True
     for key in M:
-        if G.get_edge_data(key, M[key])['weight'] == Math.inf:
+        if G.get_edge_data(key, M[key])['weight'] == math.inf:
             ok = False
             M.pop(key)
     
