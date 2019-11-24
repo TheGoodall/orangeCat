@@ -1,4 +1,4 @@
-Table: Location
+alTable: Location
 Columns: (CentreID), PostCode, CentreName
 ex:	Durham, 6-7, -, 6-7,
 
