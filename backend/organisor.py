@@ -31,8 +31,8 @@ class Tutee:
         self.subject2 = subject2
         self.days = days
 
-# s takes as inputs: one tutor object, one tutee object and returns as output: one positive float or infinity marking the suitability of pairing the two.
-# a lower value shows better compatability
+# s takes as inputs: one tutor object, one tutee object and returns as output: a tuple ->(one positive float or infinity marking the suitability of pairing the two
+# a lower value shows better compatability, reason for score)
 def s(tutor, tutee):
     impossible = True # remains True if no matching days for this pair
     for d in tutor.days:
@@ -42,16 +42,36 @@ def s(tutor, tutee):
     alpha = 1.5     # a coefficient that generates preference for tutees getting their first preference
 
     if impossible:
-        return math.inf
-    else
-        return min(tutor.subPrefs[allSubjects.index(tutee.subject1)][1], alpha * tutor.subPrefs[allSubjects.index(tutee.subject2)][1])
+        return (math.inf, "days")
+    else:
+        firstPref = tutor.subPrefs[allSubjects.index(tutee.subject1)][1]
+        secondPref = alpha * tutor.subPrefs[allSubjects.index(tutee.subject2)][1]
+        if firstPref <= secondPref:
+            return (firstPref, "first")
+        else:
+            return (secondPref, "second")
+
+# match takes a list of tutors and tutees and returns the best possible matching
+def match(tutors, tutees):
+    scoreMat = [len(tutors)][len(tutees)] #scoreMat[tutorIndex][tuteeIndex] returns the score for this pair and the label explaining the score - is stored as a tuple (score, label)
+    for tutor in range(len(tutors)):
+        for tutee in range(len(tutees)):
+            scoreMat[tutor][tutee] = s(tutors[tutor], tutees[tutee])
+
+    # convert matrix to a complete bipartite graph
+    G = nx.Graph()
+    # add nodes - tutors and tutees
+    G.add_nodes_from([tutor.tutorID for tutor in tutors], bipartite=0)
+    G.add_nodes_from([tutee.tuteeID for tutee in tutees], bipartite=1)
 
 tutors_to_match = [
     Tutor(1, ['a', 'b'], ['m', 'w']),
     Tutor(2, ['b', 'c'], ['w']),
     Tutor(3, ['c', 'a'], ['m', 'w'])]
 tutees_to_match = [
-    Tutee(-1, 'a', ['m', 'w']), Tutee(-2, 'b', ['m', 'w']), Tutee(-3, 'c', ['m', 'w'])]
+    Tutee(-1, 'a', 'b', ['m', 'w']),
+    Tutee(-2, 'b', 'c', ['m', 'w']),
+    Tutee(-3, 'c', 'a', ['m', 'w'])]
 
 p = nx.Graph()
 
