@@ -4,5 +4,6 @@ python-dotenv
 requests
 authlib
 six
-
+scipy
 networkx
+mysql-connector
