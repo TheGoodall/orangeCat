@@ -2,8 +2,9 @@
 {% block main %}
 {% if account_exists %}
 
-lovely dashboard here
-
+<div style="background-color:{% if tutortype == "tutee" %}green{%else%}red{%endif%}">
+    test
+</div>
 {% else %}
 
 <a href="/dashboard/tutor">tutor</a>

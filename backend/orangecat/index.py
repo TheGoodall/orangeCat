@@ -89,26 +89,37 @@ def index():
 @requires_auth
 def dashboard():
     cursor.execute("select * from tutee where tutee_id=%s", (session['profile']['user_id'],))
+    result = cursor.fetchall()
     account_exists = False
-    for r in cursor:
+    tutortype = ""
+    for r in result:
         print(r)
         account_exists = True
-    return render_template('dashboard.html', loggedin=session, account_exists=account_exists)
+        tutortype = "tutee"
+    cursor.execute("select * from tutor where tutor_id=%s", (session['profile']['user_id'],))
+    result = cursor.fetchall()
+    for r in result:
+        accound_exists = True
+        tutortype = "tutor"
+
+
+    return render_template('dashboard.html', loggedin=session, account_exists=account_exists, tutortype=tutortype)
 
 @app.route('/dashboard/tutor')
 @requires_auth
 def tutor():
     cursor.execute("select * from subject")
-    data = [i for i in cursor]
+    result = cursor.fetchall()
+    data = [i for i in result]
     return render_template('tutor.html', loggedin=session, data=data)
 
 @app.route('/dashboard/tutee')
 @requires_auth
 def tutee():
     cursor.execute("select * from subject")
-    subjects = [s for s in cursor]
+    subjects = [s for s in cursor.fetchall()]
     cursor.execute("select * from times")
-    times = [t for t in cursor]
+    times = [t for t in cursor.fetchall()]
     return render_template('tutee.html', loggedin=session, subjects=subjects, times=times)
 
 @app.route('/dashboard/tutee-signup', methods=["POST"])
@@ -120,10 +131,14 @@ def tutee_signup():
         second_subject = request.form['second_subject']
         cursor.execute("insert into tutee values (%s, %s, %s, %s, %s);",
             (session['user_id'], first_subject, second_subject, fname, sname))
+<<<<<<< HEAD
         for time_id in request.form.getlist('time'):
             print(session['user_id'], time_id)
             cursor.execute("insert into tutee_time values (%s, %s)",
                 (session['user_id'], time_id))
+=======
+
+>>>>>>> bc31840741615fb4dacadf18edacb435f38da273
         cnx.commit()
         return redirect(url_for("dashboard"))
     else:

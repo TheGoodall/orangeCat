@@ -2,7 +2,7 @@ import math
 import networkx as nx
 from networkx.algorithms import bipartite
 
-allSubjects = ['a', 'b', 'c']
+allSubjects = ['a', 'b', 'c', 'x', 'y']
 allDays = ['m', 'w']
 
 class Tutor:
@@ -25,10 +25,9 @@ class Tutor:
         self.days = days
 
 class Tutee:
-    def __init__(self, tuteeID, subject1, subject2, days):
+    def __init__(self, tuteeID, subjects, days):
         self.tuteeID = tuteeID
-        self.subject1 = subject1
-        self.subject2 = subject2
+        self.subjects = subjects # an ordered list. subjects[0] is the favourite option
         self.days = days
 
 # s takes as inputs: one tutor object, one tutee object and returns as output: a tuple ->(one positive float or infinity marking the suitability of pairing the two
@@ -39,17 +38,21 @@ def s(tutor, tutee):
         if d in tutee.days:
             impossible = False
 
-    alpha = 1.5     # a coefficient that generates preference for tutees getting their first preference
 
+    # TWEAKABLE VARIABLE ALERT
+    alpha = 1.5     # a coefficient that generates preference for tutees getting their first preference
+    # Don't forget that this can be tweaked
+
+    
     if impossible:
         return (math.inf, "days")
     else:
-        firstPref = tutor.subPrefs[allSubjects.index(tutee.subject1)][1]
-        secondPref = alpha * tutor.subPrefs[allSubjects.index(tutee.subject2)][1]
-        if firstPref <= secondPref:
-            return (firstPref, "first")
-        else:
-            return (secondPref, "second")
+        prefs = []
+        for i in range(len(tutee.subjects)):
+            prefs.append((alpha ** i) * tutor.subPrefs[allSubjects.index(tutee.subjects[i])][1])
+        
+        bestPref = min(prefs)
+        return (bestPref, prefs.index(bestPref))
 
 # match takes a list of tutors and tutees and returns the best possible matching
 def match(tutors, tutees):
@@ -73,6 +76,26 @@ def match(tutors, tutees):
             G.add_edge(tuteeIDIndex[tuteej], tutorIDIndex[tutori], weight=scoreMat[tutori][tuteej][0], label=scoreMat[tutori][tuteej][1])
 
     M = bipartite.minimum_weight_full_matching(G)
+
+    #remove duplicate dict data
+    for tutee in tutees:
+        M.pop(tutee.tuteeID, None)
+    #remove any infinite edges
+    ok = True
+    for key in M:
+        if G.get_edge_data(key, M[key])['weight'] == math.inf:
+            ok = False
+            M.pop(key)
+    
+    matchableTutors = [tutor for tutor in tutors if tutor.tutorID in M]
+    matchableTutees = [tutee for tutee in tutees if tutee.tuteeID in M.values()]
+
+    # if not ok we need to call repeat on a subset of tutors and tutees
+    if not ok:
+        return match(matchableTutors, matchableTutees)
+
+    
+    
     return M
 
 
@@ -81,8 +104,8 @@ tutors_to_match = [
     Tutor("Beth", ['b', 'c'], [0, 1], ['w']),
     Tutor("Ceri", ['c', 'a'], [0, 1], ['m', 'w'])]
 tutees_to_match = [
-    Tutee("Xena", 'a', 'b', ['m', 'w']),
-    Tutee("Yog", 'b', 'c', ['m', 'w']),
-    Tutee("Zin", 'c', 'a', ['m', 'w'])]
+    Tutee("Xena", ['a', 'b'], ['m', 'w']),
+    Tutee("Yog", ['b', 'c'], ['m', 'w']),
+    Tutee("Zin", ['c', 'a'], ['m', 'w'])]
 
 print(match(tutors_to_match, tutees_to_match))
